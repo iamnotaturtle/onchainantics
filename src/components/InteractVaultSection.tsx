@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { useAccount, useChainId, usePublicClient, useReadContract, useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
+import { useConnection, useChainId, usePublicClient, useReadContract, useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
 import { formatUnits, isAddress, parseUnits } from 'viem'
 import { getAssetABI, getVaultABI } from '../lib/contract'
 import WalletButton from './WalletButton'
@@ -101,11 +101,11 @@ function ActionButton({
 }
 
 export default function InteractVaultSection({ initialAddress, asynchronousHint }: InteractVaultSectionProps) {
-  const { address, isConnected } = useAccount()
+  const { address, isConnected } = useConnection()
   const chainId = useChainId()
   const publicClient = usePublicClient()
   const queryClient = useQueryClient()
-  const { writeContract, data: hash, isPending } = useWriteContract()
+  const { mutate: writeContract, data: hash, isPending } = useWriteContract()
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash })
 
   const [contractAddress, setContractAddress] = useState(initialAddress)

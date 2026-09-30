@@ -1,11 +1,11 @@
-import { useAccount, useConnect, useDisconnect, useChainId } from 'wagmi'
+import { useConnection, useConnect, useDisconnect, useChainId } from 'wagmi'
 import { injected } from 'wagmi/connectors'
 
 export default function WalletButton() {
-  const { address, isConnected } = useAccount()
+  const { address, isConnected } = useConnection()
   const chainId = useChainId()
-  const { connect } = useConnect()
-  const { disconnect } = useDisconnect()
+  const { mutate: connect } = useConnect()
+  const { mutate: disconnect } = useDisconnect()
 
   const getEtherscanAddressUrl = (address: string) => {
     const chainNames: Record<number, string> = {

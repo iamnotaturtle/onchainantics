@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useAccount, useWaitForTransactionReceipt, usePublicClient, useWalletClient, useChainId } from 'wagmi'
+import { useConnection, useWaitForTransactionReceipt, usePublicClient, useWalletClient, useChainId } from 'wagmi'
 import { encodeAbiParameters, parseAbiParameters } from 'viem'
 import { compileERC721Contract } from '../lib/contract'
 import ChainSelector from './ChainSelector'
@@ -10,7 +10,7 @@ interface DeployERC721SectionProps {
 }
 
 export default function DeployERC721Section({ onDeploy }: DeployERC721SectionProps) {
-  const { address, isConnected } = useAccount()
+  const { address, isConnected } = useConnection()
   const chainId = useChainId()
   const publicClient = usePublicClient()
   const { data: walletClient } = useWalletClient()

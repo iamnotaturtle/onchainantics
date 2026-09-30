@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useAccount, useWaitForTransactionReceipt, usePublicClient, useWalletClient, useChainId } from 'wagmi'
+import { useConnection, useWaitForTransactionReceipt, usePublicClient, useWalletClient, useChainId } from 'wagmi'
 import { encodeAbiParameters, parseAbiParameters } from 'viem'
 import { compileContract, compileFaucetContract } from '../lib/contract'
 import ChainSelector from './ChainSelector'
@@ -10,7 +10,7 @@ interface DeploySectionProps {
 }
 
 export default function DeploySection({ onDeploy }: DeploySectionProps) {
-  const { address, isConnected } = useAccount()
+  const { address, isConnected } = useConnection()
   const chainId = useChainId()
   const publicClient = usePublicClient()
   const { data: walletClient } = useWalletClient()

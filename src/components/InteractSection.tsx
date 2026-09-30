@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useChainId, usePublicClient } from 'wagmi'
+import { useConnection, useReadContract, useWriteContract, useWaitForTransactionReceipt, useChainId, usePublicClient } from 'wagmi'
 import { formatUnits, parseUnits } from 'viem'
 import { getContractABI } from '../lib/contract'
 import WalletButton from './WalletButton'
@@ -11,10 +11,10 @@ interface InteractSectionProps {
 type Action = 'mint' | 'transfer' | 'balance' | null
 
 export default function InteractSection({ initialAddress }: InteractSectionProps) {
-  const { address, isConnected } = useAccount()
+  const { address, isConnected } = useConnection()
   const chainId = useChainId()
   const publicClient = usePublicClient()
-  const { writeContract, data: hash, isPending } = useWriteContract()
+  const { mutate: writeContract, data: hash, isPending } = useWriteContract()
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
     hash,
   })
@@ -349,10 +349,10 @@ export default function InteractSection({ initialAddress }: InteractSectionProps
             Contract Information
           </h3>
           <div style={{ marginBottom: '12px', fontSize: '14px', color: '#4a5568' }}>
-            <strong style={{ color: '#2d3748', display: 'inline-block', minWidth: '120px' }}>Name:</strong> {name || 'Loading...'}
+            <strong style={{ color: '#2d3748', display: 'inline-block', minWidth: '120px' }}>Name:</strong> {typeof name === 'string' ? name : 'Loading...'}
           </div>
           <div style={{ marginBottom: '12px', fontSize: '14px', color: '#4a5568' }}>
-            <strong style={{ color: '#2d3748', display: 'inline-block', minWidth: '120px' }}>Symbol:</strong> {symbol || 'Loading...'}
+            <strong style={{ color: '#2d3748', display: 'inline-block', minWidth: '120px' }}>Symbol:</strong> {typeof symbol === 'string' ? symbol : 'Loading...'}
           </div>
           <div style={{ marginBottom: '12px', fontSize: '14px', color: '#4a5568' }}>
             <strong style={{ color: '#2d3748', display: 'inline-block', minWidth: '120px' }}>Decimals:</strong> {decimals?.toString() || 'Loading...'}
@@ -721,7 +721,7 @@ export default function InteractSection({ initialAddress }: InteractSectionProps
                 fontWeight: 500,
               }}
             >
-              Balance: {balance} {symbol || ''}
+              Balance: {balance} {typeof symbol === 'string' ? symbol : ''}
             </div>
           )}
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>

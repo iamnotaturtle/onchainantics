@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useChainId, usePublicClient } from 'wagmi'
+import { useConnection, useReadContract, useWriteContract, useWaitForTransactionReceipt, useChainId, usePublicClient } from 'wagmi'
 import { getERC721ContractABI } from '../lib/contract'
 import WalletButton from './WalletButton'
 
@@ -10,10 +10,10 @@ interface InteractERC721SectionProps {
 type Action = 'mint' | 'transfer' | 'balance' | 'owner' | 'tokenURI' | null
 
 export default function InteractERC721Section({ initialAddress }: InteractERC721SectionProps) {
-  const { address, isConnected } = useAccount()
+  const { address, isConnected } = useConnection()
   const chainId = useChainId()
   const publicClient = usePublicClient()
-  const { writeContract, data: hash, isPending } = useWriteContract()
+  const { mutate: writeContract, data: hash, isPending } = useWriteContract()
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
     hash,
   })
@@ -343,14 +343,14 @@ export default function InteractERC721Section({ initialAddress }: InteractERC721
             NFT Collection Information
           </h3>
           <div style={{ marginBottom: '12px', fontSize: '14px', color: '#4a5568' }}>
-            <strong style={{ color: '#2d3748', display: 'inline-block', minWidth: '120px' }}>Name:</strong> {name || 'Loading...'}
+            <strong style={{ color: '#2d3748', display: 'inline-block', minWidth: '120px' }}>Name:</strong> {typeof name === 'string' ? name : 'Loading...'}
           </div>
           <div style={{ marginBottom: '12px', fontSize: '14px', color: '#4a5568' }}>
-            <strong style={{ color: '#2d3748', display: 'inline-block', minWidth: '120px' }}>Symbol:</strong> {symbol || 'Loading...'}
+            <strong style={{ color: '#2d3748', display: 'inline-block', minWidth: '120px' }}>Symbol:</strong> {typeof symbol === 'string' ? symbol : 'Loading...'}
           </div>
           <div style={{ marginBottom: '12px', fontSize: '14px', color: '#4a5568' }}>
             <strong style={{ color: '#2d3748', display: 'inline-block', minWidth: '120px' }}>Base URI:</strong>{' '}
-            <span style={{ wordBreak: 'break-all' }}>{baseURI || 'Loading...'}</span>
+            <span style={{ wordBreak: 'break-all' }}>{typeof baseURI === 'string' ? baseURI : 'Loading...'}</span>
           </div>
           <div style={{ marginBottom: '12px', fontSize: '14px', color: '#4a5568' }}>
             <strong style={{ color: '#2d3748', display: 'inline-block', minWidth: '120px' }}>Total Supply:</strong>{' '}

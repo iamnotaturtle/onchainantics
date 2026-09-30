@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useAccount, useWaitForTransactionReceipt, usePublicClient, useWalletClient, useChainId } from 'wagmi'
+import { useConnection, useWaitForTransactionReceipt, usePublicClient, useWalletClient, useChainId } from 'wagmi'
 import { encodeAbiParameters, isAddress, parseAbiParameters } from 'viem'
 import { compileERC4626Vault, compileERC7540Vault } from '../lib/contract'
 import ChainSelector from './ChainSelector'
@@ -30,7 +30,7 @@ const labelStyle = {
 }
 
 export default function DeployVaultSection({ onDeploy, asynchronous, onAsynchronousChange }: DeployVaultSectionProps) {
-  const { address, isConnected } = useAccount()
+  const { address, isConnected } = useConnection()
   const chainId = useChainId()
   const publicClient = usePublicClient()
   const { data: walletClient } = useWalletClient()

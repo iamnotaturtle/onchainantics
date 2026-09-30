@@ -3,7 +3,7 @@ import { useChainId, useSwitchChain } from 'wagmi'
 
 export default function ChainSelector() {
   const chainId = useChainId()
-  const { switchChain } = useSwitchChain()
+  const { mutate: switchChain } = useSwitchChain()
 
   return (
     <div style={{ marginBottom: '24px' }}>
