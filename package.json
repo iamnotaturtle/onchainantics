@@ -1,7 +1,7 @@
 {
-  "name": "faucet",
+  "name": "onchainantics",
   "version": "1.0.0",
-  "description": "Deploy your ERC20 contract and interact with it",
+  "description": "Deploy and interact with ERC20 tokens, NFTs, and vaults on testnets",
   "type": "module",
   "scripts": {
     "compile-contract": "node scripts/compile-contract.js",

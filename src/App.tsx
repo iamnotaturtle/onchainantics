@@ -7,11 +7,17 @@ import DeployERC721Section from './components/DeployERC721Section'
 import InteractERC721Section from './components/InteractERC721Section'
 import DeployVaultSection from './components/DeployVaultSection'
 import InteractVaultSection from './components/InteractVaultSection'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const queryClient = new QueryClient()
 
 type ContractType = 'erc20' | 'erc721' | 'vault'
+
+const TITLE_BY_TYPE: Record<ContractType, string> = {
+  erc20: 'ERC20 · onchainantics',
+  erc721: 'ERC721 · onchainantics',
+  vault: 'Vault · onchainantics',
+}
 
 function App() {
   const [deployedAddress, setDeployedAddress] = useState<string>('')
@@ -19,6 +25,10 @@ function App() {
   const [deployedVaultAddress, setDeployedVaultAddress] = useState<string>('')
   const [vaultAsynchronous, setVaultAsynchronous] = useState(false)
   const [contractType, setContractType] = useState<ContractType>('erc20')
+
+  useEffect(() => {
+    document.title = TITLE_BY_TYPE[contractType]
+  }, [contractType])
 
   const handleContractTypeChange = (type: ContractType) => {
     setContractType(type)
@@ -37,7 +47,7 @@ function App() {
             textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
             letterSpacing: '-0.02em'
           }}>
-            {contractType === 'erc20' ? 'ERC20 Faucet' : contractType === 'erc721' ? 'ERC721 NFT Deployer' : 'Tokenized Vault'}
+            onchainantics
           </h1>
 
           <div style={{

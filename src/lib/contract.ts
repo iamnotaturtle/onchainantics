@@ -252,7 +252,7 @@ export interface DeployParams {
 async function loadCompiledContract(): Promise<CompileResult | null> {
   try {
     // Try to load from public directory (copied during build)
-    const response = await fetch('/faucet/compiled-contract.json')
+    const response = await fetch('/onchainantics/compiled-contract.json')
     if (response.ok) {
       const data = await response.json()
       return {
@@ -338,7 +338,7 @@ export async function compileContract(): Promise<CompileResult> {
 async function loadCompiledFaucetContract(): Promise<CompileResult | null> {
   try {
     // Try to load from public directory (copied during build)
-    const response = await fetch('/faucet/compiled-faucet-contract.json')
+    const response = await fetch('/onchainantics/compiled-faucet-contract.json')
     if (response.ok) {
       const data = await response.json()
       return {
@@ -691,7 +691,7 @@ contract ERC721 is IERC721, IERC721Metadata {
 async function loadCompiledERC721Contract(): Promise<CompileResult | null> {
   try {
     // Try to load from public directory (copied during build)
-    const response = await fetch('/faucet/compiled-erc721-contract.json')
+    const response = await fetch('/onchainantics/compiled-erc721-contract.json')
     if (response.ok) {
       const data = await response.json()
       return {
@@ -932,7 +932,7 @@ async function compileWithRemix(
 
 export async function compileERC4626Vault(): Promise<CompileResult> {
   const precompiled = await loadCompiledJson(
-    ['/faucet/compiled-erc4626-vault.json', '/compiled-erc4626-vault.json'],
+    ['/onchainantics/compiled-erc4626-vault.json', '/compiled-erc4626-vault.json'],
     'ERC4626 vault',
   )
   return compileWithRemix('ERC4626Vault.sol', 'ERC4626Vault', ERC4626_VAULT_CONTRACT_SOURCE, precompiled)
@@ -940,7 +940,7 @@ export async function compileERC4626Vault(): Promise<CompileResult> {
 
 export async function compileERC7540Vault(): Promise<CompileResult> {
   const precompiled = await loadCompiledJson(
-    ['/faucet/compiled-erc7540-vault.json', '/compiled-erc7540-vault.json'],
+    ['/onchainantics/compiled-erc7540-vault.json', '/compiled-erc7540-vault.json'],
     'ERC7540 vault',
   )
   return compileWithRemix('ERC7540Vault.sol', 'ERC7540Vault', ERC7540_VAULT_CONTRACT_SOURCE, precompiled)
